@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-export const GlobalSytle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
 
     * {
         box-sizing: border-box;
@@ -10,7 +10,27 @@ export const GlobalSytle = createGlobalStyle`
 
     body {
         font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
-        color: #333;
+        background: ${(props) => props.theme.colors.gray800};
+        color: ${(props) => props.theme.colors.gray100};
+        font-family: "Nunito Sans", sans-serif;
+        font-weight: ${(props) => props.theme.fontWeight.regular};
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: antialiased;
+        overflow-x: hidden;
     }
+
+    h1, h2, h3, h4{
+        font-family: "Nunito Sans", sans-serif;
+        font-weight: ${(props) => props.theme.fontWeight.bold};
+    };
+
+    a{
+        text-decoration: none;
+    };
+
+    button, a{
+        cursor: pointer;
+        transition: filter 0.2s;
+        border: none;
+    };
 `;
