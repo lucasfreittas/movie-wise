@@ -26,11 +26,11 @@ export const defaultTheme = {
     },
 
     fontSize: {
-        xs: '0.875rem', // Extra Small (14px)
-        sm: '1rem', // Small (16px)
-        md: '1.125rem', // Medium (18px)
-        lg: '1.25rem', // Large (20px)
-        xl: '1.5rem', // Extra Large (24px)
+        xs: '1.4rem', // Extra Small (14px)
+        sm: '1.6rem', // Small (16px)
+        md: '1.8rem', // Medium (18px)
+        lg: '2rem', // Large (20px)
+        xl: '2.4rem', // Extra Large (24px)
     },
 
     fontWeight: {
