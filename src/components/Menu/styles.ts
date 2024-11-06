@@ -17,6 +17,7 @@ export const MenuContainer = styled.nav`
     min-width: 232px;
     border-radius: 1.6rem;
     padding: 2.4rem;
+    margin-right: 1.6rem;
 
     > .LogoWise{
         margin: 1.6rem;
@@ -76,14 +77,14 @@ export const Indicator = styled.div<IndicatorProps>`
             case '/':
                 return '48px';
             case '/explore':
-                return '106px'; // Ajuste para corresponder ao item de menu
+                return '106px'; 
             case '/profile':
-                return '164px'; // Ajuste conforme necessário
+                return '164px';
             default:
                 return '0';
         }
     }};
-    width: 4px;  // Largura do indicador
+    width: 4px;  
     height: 24px;
     background: ${(props) => props.theme.colors.gradientVertical};
     transition: all 0.3s ease;
