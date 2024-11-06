@@ -6,6 +6,6 @@ export const PageContainer = styled.section`
     height: 100vh;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 2.4rem;
+    padding: 1.6rem;
 
 `;

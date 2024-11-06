@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 import MenuBackground from '../../assets/menu-background-photo.png';
 
+interface IndicatorProps {
+    position: string;
+  }
+
 export const MenuContainer = styled.nav`
     display: flex;
     flex-direction: column;
@@ -26,6 +30,7 @@ export const MenuContainer = styled.nav`
         justify-content: flex-start;
         height: 100%;
         padding: 4rem 0;
+        position: relative;
     };  
 `;
 
@@ -38,6 +43,10 @@ export const PageOption = styled.div`
     font-size: ${(props) => props.theme.fontSize.sm};
     color: ${(props) => props.theme.colors.gray400};
     line-height: ${(props) => props.theme.lineHeight.large};
+
+    &.active {
+    color: ${(props) => props.theme.colors.gray100};
+  }
 `;
 
 export const ProfileToggle = styled.div`
@@ -57,4 +66,26 @@ export const ProfileToggle = styled.div`
         background: ${(props) => props.theme.colors.gradientVertical};// Gradiente como fundo
     }
 
+`;
+
+export const Indicator = styled.div<IndicatorProps>`
+    position: absolute;
+    left: -16px;
+    top: ${(props) => {
+        switch (props.position) {
+            case '/':
+                return '48px';
+            case '/explore':
+                return '106px'; // Ajuste para corresponder ao item de menu
+            case '/profile':
+                return '164px'; // Ajuste conforme necessário
+            default:
+                return '0';
+        }
+    }};
+    width: 4px;  // Largura do indicador
+    height: 24px;
+    background: ${(props) => props.theme.colors.gradientVertical};
+    transition: all 0.3s ease;
+    border-radius: 2px;
 `;

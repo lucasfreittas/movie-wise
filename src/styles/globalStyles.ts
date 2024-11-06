@@ -37,8 +37,11 @@ export const GlobalStyle = createGlobalStyle`
     };
 
     button, a{
-        cursor: pointer;
-        transition: filter 0.2s;
         border: none;
+
+        &:hover {
+            cursor: pointer;
+            filter: brightness(1.4);
+        }
     };
 `;
