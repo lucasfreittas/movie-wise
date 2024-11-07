@@ -18,6 +18,8 @@ export const MenuContainer = styled.nav`
     border-radius: 1.6rem;
     padding: 2.4rem;
     margin-right: 1.6rem;
+    position: sticky;
+    top: 0;
 
     > .LogoWise{
         margin: 1.6rem;
