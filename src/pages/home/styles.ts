@@ -6,13 +6,12 @@ export const HomeContainer = styled.section`
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    height: 100%;
 
     h3 {
         font-size: ${(props) => props.theme.fontSize.xs};
         font-weight: ${(props) => props.theme.fontWeight.regular};
         line-height: ${(props) => props.theme.lineHeight.large};
-    }
+    };
 `;
 
 export const TitleContainer = styled.header`
@@ -34,7 +33,6 @@ export const HomeContent = styled.main`
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    height: 100%;
     gap: 6.4rem;
 `;
 
