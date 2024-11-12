@@ -1,10 +1,13 @@
-import Comments from "@/components/Comments";
+import { Comments } from "@/components/Comments";
+import { Input } from "@/components/Input";
+
 import { ProfileContainer, MainContentProfile, RecentReviews, TitleContainer, ReviewsContainer, ProfileDataContainer, Divisor, DataContainer } from "./styles";
 
 import { User, BookOpen, Books, UserList, BookmarkSimple } from "@phosphor-icons/react/dist/ssr";
 
 import Image from "next/image";
 import ProfileImage from '../../assets/Avatar-Random.png';
+
 
 export default function Profile (){
     return(
@@ -15,24 +18,25 @@ export default function Profile (){
             </TitleContainer>
             <MainContentProfile>
                 <ReviewsContainer>
+                    <Input placeholder="Buscar filme desejado"/>
                     <RecentReviews>
                         <div className="titleRecentReviews">
                             <h3>Há 2 dias</h3>
                         </div>
-                        <Comments />
+                        <Comments variant="default"/>
                     </RecentReviews>
                     <RecentReviews>
                         <div className="titleRecentReviews">
                             <h3>Há 4 dias</h3>
                         </div>
-                        <Comments />
-                        <Comments />
+                        <Comments variant="default"/>
+                        <Comments variant="default"/>
                     </RecentReviews>
                     <RecentReviews>
                         <div className="titleRecentReviews">
                             <h3>Há 6 dias</h3>
                         </div>
-                        <Comments />
+                        <Comments variant="default"/>
                     </RecentReviews>
                 </ReviewsContainer>
                 <ProfileDataContainer>

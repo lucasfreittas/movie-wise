@@ -1,8 +1,8 @@
-import Comments from "@/components/Comments";
-import { HomeContainer, HomeContent, PopularMovies, RecentReviews, TitleContainer } from "./styles";
+import { Comments } from "@/components/Comments";
+import { HomeContainer, HomeContent, LastReview, PopularMovies, RecentReviews, ReviewsContent, TitleContainer } from "./styles";
 
 import { ChartLineUp, CaretRight } from "@phosphor-icons/react/dist/ssr";
-import MovieCard from "@/components/MovieCard";
+import { MovieCard } from "@/components/MovieCard";
 
 export default function Home (){
     return(
@@ -12,24 +12,33 @@ export default function Home (){
                 <h1>Início</h1>
             </TitleContainer>
             <HomeContent>
-                <RecentReviews>
-                    <div className="titleRecentReviews">
-                        <h3>Hello Recent Review</h3>
-                    </div>
-                    <Comments />
-                    <Comments />
-                    <Comments />
-                    <Comments />
-                </RecentReviews>
+                <ReviewsContent>
+                    <LastReview>
+                        <div className="SectionTitle">
+                            <h3>Sua última leitura</h3>
+                            <button>Ver todos <CaretRight size={16}/></button>
+                        </div>
+                        <MovieCard variant="detailed" />
+                    </LastReview>
+                    <RecentReviews>
+                        <div className="titleRecentReviews">
+                            <h3>Avaliações mais recentes</h3>
+                        </div>
+                        <Comments variant="detailed" />
+                        <Comments variant="detailed" />
+                        <Comments variant="detailed" />
+                        <Comments variant="detailed" />
+                    </RecentReviews>
+                </ReviewsContent>
                 <PopularMovies>
-                    <div>
-                        <h3>Hello Popular Movie</h3>
+                    <div className="SectionTitle">
+                        <h3>Livros populares</h3>
                         <button>Ver todos <CaretRight size={16}/></button>
                     </div>
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
+                    <MovieCard variant="mini" />
+                    <MovieCard variant="mini" />
+                    <MovieCard variant="mini"/>
+                    <MovieCard variant="mini"/>
                 </PopularMovies>
             </HomeContent>
         </HomeContainer>

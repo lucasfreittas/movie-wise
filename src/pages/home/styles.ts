@@ -36,6 +36,39 @@ export const HomeContent = styled.main`
     gap: 6.4rem;
 `;
 
+export const ReviewsContent = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 60.8rem;
+    gap: 4rem;
+`;
+
+export const LastReview = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+
+    > .SectionTitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.4rem;
+
+        > button {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: none;
+            color: ${(props) => props.theme.colors.purple100};
+            font-size: ${(props) => props.theme.fontSize.xs};
+            font-weight: ${(props) => props.theme.fontWeight.bold};
+            line-height: ${(props) => props.theme.lineHeight.large};
+         }
+    }
+`;
+
 export const RecentReviews = styled.section`
     display: flex;
     flex-direction: column;
@@ -56,7 +89,7 @@ export const PopularMovies = styled.section`
     width: 32.4rem;
     height: 100%;
 
-    > div {
+    > .SectionTitle {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -71,6 +104,6 @@ export const PopularMovies = styled.section`
             font-size: ${(props) => props.theme.fontSize.xs};
             font-weight: ${(props) => props.theme.fontWeight.bold};
             line-height: ${(props) => props.theme.lineHeight.large};
-        }
-    };
+         }
+    }
 `;

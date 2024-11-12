@@ -1,24 +1,37 @@
 import styled from "styled-components";
 
-export const MovieCardContainer = styled.div`
+interface MovieCardContainerProps {
+    variant: 'mini' | 'default' | 'detailed' | 'expanded'; 
+};
+
+export const MovieCardContainer = styled.div<MovieCardContainerProps>`
     display: flex;
-    gap: 1.6rem;
+    justify-content: flex-start;
+    gap: 2.4rem;
     width: 100%;
-    padding: 1.6rem 2rem;
-    background-color: ${(props) => props.theme.colors.gray700};
+    padding: ${(props) => props.variant === 'detailed' ? '2.0rem 2.4rem' : '1.6rem 2.0rem'};
+    background-color: ${(props) => 
+        props.variant === 'detailed' ? props.theme.colors.gray600 : props.theme.colors.gray700};
     border-radius: 8px;
+    
 
     > img {
-        width: 6.4rem;
-        height: 9.4rem;
+        width: ${(props) => props.variant === 'detailed' ? '10.8rem' : '6.4rem'};
+        height:  ${(props) => props.variant === 'detailed' ? '15.2rem' : '9.4rem'};
         object-fit: cover;
         border-radius: 4px;
     }
 `;
 
-export const MovieContent = styled.div`
+export const MovieWrapper = styled.div<MovieCardContainerProps>`
     display: flex;
     flex-direction: column;
+    justify-self: flex-start;
+`;
+
+export const MovieContent = styled.div<MovieCardContainerProps>`
+    display: flex;
+    flex-direction: ${(props) => props.variant === 'detailed' ? 'row' : 'column'};
     justify-content: space-between;
     width: 100%;
     height: 100%;
@@ -26,12 +39,21 @@ export const MovieContent = styled.div`
 
 export const MovieTitle = styled.header`
     width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > span {
+        font-size: ${(props) => props.theme.fontSize.xs};
+        font-weight: ${(props) => props.theme.fontWeight.regular};
+        line-height: ${(props) => props.theme.lineHeight.large};
+        color: ${(props) => props.theme.colors.gray300};
+        margin-bottom: 1.2rem;
+    };
 
     > h3 {
         font-size: ${(props) => props.theme.fontSize.sm};
         font-weight: ${(props) => props.theme.fontWeight.bold};
         line-height: ${(props) => props.theme.lineHeight.regular};
-        margin: 0;
     };
 
     > p {
@@ -40,4 +62,11 @@ export const MovieTitle = styled.header`
         line-height: ${(props) => props.theme.lineHeight.large};
         color: ${(props) => props.theme.colors.gray400};
     };
+`;
+
+export const MovieDescription = styled.div`
+    font-size: ${(props) => props.theme.fontSize.xs};
+    font-weight: ${(props) => props.theme.fontWeight.regular};
+    line-height: ${(props) => props.theme.lineHeight.large};
+    color: ${(props) => props.theme.colors.gray300};
 `;

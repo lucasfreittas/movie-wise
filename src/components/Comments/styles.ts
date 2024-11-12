@@ -67,22 +67,10 @@ export const MovieInfo = styled.div`
 `;
 
 export const Comment = styled.div`
-
-    > h3 {
-        font-size: ${(props) => props.theme.fontSize.sm};
-        font-weight: ${(props) => props.theme.fontWeight.bold};
-        line-height: ${(props) => props.theme.lineHeight.regular};
-        margin: 0;
-    };
-
-    > p {
-        font-size: ${(props) => props.theme.fontSize.xs};
-        font-weight: ${(props) => props.theme.fontWeight.regular};
-        line-height: ${(props) => props.theme.lineHeight.large};
-        color: ${(props) => props.theme.colors.gray400};
-        margin-bottom: 1.6rem;
-    };
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
     > div {
         font-size: ${(props) => props.theme.fontSize.xs};
         font-weight: ${(props) => props.theme.fontWeight.regular};
@@ -93,5 +81,25 @@ export const Comment = styled.div`
             font-weight: ${(props) => props.theme.fontWeight.bold};
             color: ${(props) => props.theme.colors.purple100};
         };
+    };
+`;
+
+export const CommentData = styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    h3 {
+        font-size: ${(props) => props.theme.fontSize.sm};
+        font-weight: ${(props) => props.theme.fontWeight.bold};
+        line-height: ${(props) => props.theme.lineHeight.regular};
+        margin: 0;
+    };
+
+    p {
+        font-size: ${(props) => props.theme.fontSize.xs};
+        font-weight: ${(props) => props.theme.fontWeight.regular};
+        line-height: ${(props) => props.theme.lineHeight.large};
+        color: ${(props) => props.theme.colors.gray400};
+        margin-bottom: 1.6rem;
     };
 `;
