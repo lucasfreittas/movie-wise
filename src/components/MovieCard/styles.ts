@@ -14,13 +14,34 @@ export const MovieCardContainer = styled.div<MovieCardContainerProps>`
         props.variant === 'detailed' ? props.theme.colors.gray600 : props.theme.colors.gray700};
     border-radius: 8px;
     
-
     > img {
-        width: ${(props) => props.variant === 'detailed' ? '10.8rem' : '6.4rem'};
-        height:  ${(props) => props.variant === 'detailed' ? '15.2rem' : '9.4rem'};
+        width: ${(props) => {
+            switch (props.variant) {
+            case 'mini':
+                return '6.4rem';
+            case 'detailed':
+                return '10.8rem';
+            case 'expanded':
+                return '17.1rem';
+            default:
+                return '10.8rem'; // Valor default
+            }
+        }};
+       height: ${(props) => {
+            switch (props.variant) {
+            case 'mini':
+                return '9.4rem';
+            case 'detailed':
+                return '15.2rem';
+            case 'expanded':
+                return '24.2rem';
+            default:
+                return '15.2rem'; // Valor default
+            }
+        }};
         object-fit: cover;
         border-radius: 4px;
-    }
+    };
 `;
 
 export const MovieWrapper = styled.div<MovieCardContainerProps>`

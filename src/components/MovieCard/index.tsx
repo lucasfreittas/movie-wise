@@ -6,13 +6,14 @@ import MovieRandom2 from '../../assets/Movie-Random2.png';
 import { Star } from "@phosphor-icons/react/dist/ssr";
 
 type MovieCardProps = {
-    variant: 'mini' | 'default' | 'detailed' | 'expanded' 
+    variant: 'mini' | 'default' | 'detailed' | 'expanded'
+    onClick?: () => void;
 };
 
 
-export function MovieCard ({variant}: MovieCardProps){
+export function MovieCard ({variant, onClick}: MovieCardProps){
     return(
-        <MovieCardContainer variant={variant}>
+        <MovieCardContainer variant={variant} onClick={onClick}>
             <Image src={MovieRandom2} alt="MoviePhoto"/>
             <MovieWrapper variant={variant}>
                 <MovieContent variant={variant}>

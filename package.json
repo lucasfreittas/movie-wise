@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/runtime": "^7.26.0",
     "@phosphor-icons/react": "^2.1.7",
+    "@radix-ui/react-dialog": "^1.1.2",
     "next": "14.2.16",
     "phosphor-react": "^1.4.1",
     "react": "^18",
