@@ -5,6 +5,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['cdn.movieofthenight.com', 'www.movieofthenight.com'], // Adicione o domínio da nova URL
+  },
 };
 
 export default nextConfig;

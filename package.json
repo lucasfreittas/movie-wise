@@ -12,10 +12,12 @@
     "@babel/runtime": "^7.26.0",
     "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/react-dialog": "^1.1.2",
+    "axios": "^1.7.7",
     "next": "14.2.16",
     "phosphor-react": "^1.4.1",
     "react": "^18",
     "react-dom": "^18",
+    "streaming-availability": "^4.4.0",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {

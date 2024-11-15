@@ -6,14 +6,38 @@ interface MovieCardContainerProps {
 
 export const MovieCardContainer = styled.div<MovieCardContainerProps>`
     display: flex;
+    flex-direction: ${(props) => props.variant === 'detailed' ? 'row' : 'column'};
     justify-content: flex-start;
+    padding: ${(props) => {
+            switch (props.variant) {
+            case 'mini':
+                return '1.6rem 2rem';
+            case 'detailed':
+                return '2rem 2.4rem';
+            case 'expanded':
+                return '2.4rem 3.2rem';
+            default:
+                return '1.6rem 2rem';
+            }
+        }};
     gap: 2.4rem;
     width: 100%;
-    padding: ${(props) => props.variant === 'detailed' ? '2.0rem 2.4rem' : '1.6rem 2.0rem'};
     background-color: ${(props) => 
         props.variant === 'detailed' ? props.theme.colors.gray600 : props.theme.colors.gray700};
     border-radius: 8px;
-    
+
+    &:hover{
+        cursor:  ${(props) => props.variant !== 'expanded' ? 'pointer' : 'normal'};
+    }
+`;
+
+export const MovieCardWrapper = styled.div<MovieCardContainerProps>`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:  ${(props) => props.variant === 'expanded' ? '3.2rem' : '1.6rem'};
+    width: 100%;
+
     > img {
         width: ${(props) => {
             switch (props.variant) {
@@ -46,8 +70,8 @@ export const MovieCardContainer = styled.div<MovieCardContainerProps>`
 
 export const MovieWrapper = styled.div<MovieCardContainerProps>`
     display: flex;
-    flex-direction: column;
     justify-self: flex-start;
+    flex-direction: ${(props) => props.variant === 'detailed' ? 'column' : 'row'};
 `;
 
 export const MovieContent = styled.div<MovieCardContainerProps>`
@@ -58,27 +82,51 @@ export const MovieContent = styled.div<MovieCardContainerProps>`
     height: 100%;
 `;
 
-export const MovieTitle = styled.header`
-    width: 100%;
+export const StarsMovieCardContainer = styled.div<MovieCardContainerProps>`
     display: flex;
     flex-direction: column;
+    gap: 0.4rem;
 
-    > span {
-        font-size: ${(props) => props.theme.fontSize.xs};
+    > div{
+        display: flex;
+        gap: 0.4rem;
+        color: ${(props) => props.theme.colors.purple100};
+
+        > svg {
+            width: ${(props) => props.variant === 'expanded' ? '2rem' : '1.6rem'};
+            height: ${(props) => props.variant === 'expanded' ? '2rem' : '1.6rem'};
+        };
+    };
+
+    > p {
+        font-size: ${(props) => props.variant === 'expanded' ? props.theme.fontSize.sm : props.theme.fontSize.xs};
         font-weight: ${(props) => props.theme.fontWeight.regular};
         line-height: ${(props) => props.theme.lineHeight.large};
         color: ${(props) => props.theme.colors.gray300};
-        margin-bottom: 1.2rem;
+    };
+`;
+
+export const MovieTitle = styled.header<MovieCardContainerProps>`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    > span {
+        font-size: ${(props) => props.variant === 'expanded' ? props.theme.fontSize.sm : props.theme.fontSize.xs};
+        font-weight: ${(props) => props.theme.fontWeight.regular};
+        line-height: ${(props) => props.theme.lineHeight.large};
+        color: ${(props) => props.theme.colors.gray400};
     };
 
     > h3 {
-        font-size: ${(props) => props.theme.fontSize.sm};
+        font-size: ${(props) => props.variant === 'expanded' ? props.theme.fontSize.md : props.theme.fontSize.sm};
         font-weight: ${(props) => props.theme.fontWeight.bold};
         line-height: ${(props) => props.theme.lineHeight.regular};
     };
 
     > p {
-        font-size: ${(props) => props.theme.fontSize.xs};
+        font-size: ${(props) => props.variant === 'expanded' ? props.theme.fontSize.sm : props.theme.fontSize.xs};
         font-weight: ${(props) => props.theme.fontWeight.regular};
         line-height: ${(props) => props.theme.lineHeight.large};
         color: ${(props) => props.theme.colors.gray400};
@@ -90,4 +138,31 @@ export const MovieDescription = styled.div`
     font-weight: ${(props) => props.theme.fontWeight.regular};
     line-height: ${(props) => props.theme.lineHeight.large};
     color: ${(props) => props.theme.colors.gray300};
+`;
+
+export const MovieData = styled.div`
+    display: flex;
+    padding: 2.4rem 0 0 0;
+    gap: 5.6rem;
+    border-top: 1px solid ${(props) => props.theme.colors.gray600};
+
+    > div {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+    };
+
+    p {
+        font-size: ${(props) => props.theme.fontSize.xs};
+        font-weight: ${(props) => props.theme.fontWeight.regular};
+        line-height: ${(props) => props.theme.lineHeight.large};
+        color: ${(props) => props.theme.colors.gray300};
+    };
+
+    h3 {
+        font-size: ${(props) => props.theme.fontSize.sm};
+        font-weight: ${(props) => props.theme.fontWeight.bold};
+        line-height: ${(props) => props.theme.lineHeight.regular};
+        color: ${(props) => props.theme.colors.gray200};
+    };
 `;

@@ -48,7 +48,7 @@ export const Profile = styled.div`
     }
 `;
 
-export const StarsContainer = styled.div`
+export const StarsCommentContainer = styled.div`
     display: flex;
     gap: 0.4rem;
     color: ${(props) => props.theme.colors.purple100};

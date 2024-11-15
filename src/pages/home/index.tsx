@@ -5,6 +5,7 @@ import { ChartLineUp, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { MovieCard } from "@/components/MovieCard";
 
 export default function Home (){
+    
     return(
         <HomeContainer>
             <TitleContainer>
@@ -15,7 +16,7 @@ export default function Home (){
                 <ReviewsContent>
                     <LastReview>
                         <div className="SectionTitle">
-                            <h3>Sua última leitura</h3>
+                            <h3>Sua última avaliação</h3>
                             <button>Ver todos <CaretRight size={16}/></button>
                         </div>
                         <MovieCard variant="detailed" />

@@ -1,4 +1,4 @@
-import { Avaliation, Comment, CommentContainer, CommentData, MovieInfo, Profile, StarsContainer } from "./styles";
+import { Avaliation, Comment, CommentContainer, CommentData, MovieInfo, Profile, StarsCommentContainer } from "./styles";
 
 import Image from "next/image"
 import { Star } from "@phosphor-icons/react/dist/ssr";
@@ -9,10 +9,9 @@ type CommentsProps = {
     variant: 'mini' | 'default' | 'detailed'
 };
 
-export function Comments ({variant} : CommentsProps) {
+function CommentMini (){
     return(
         <CommentContainer>
-            { variant === 'detailed' && (
                 <Avaliation>
                 <Profile>
                     <Image src={AvatarRandom} alt="Avatar Random" />
@@ -21,34 +20,16 @@ export function Comments ({variant} : CommentsProps) {
                         <p>Hoje</p>  
                     </div>
                 </Profile>
-                <StarsContainer>
+                <StarsCommentContainer>
                     <Star size={16} weight="fill" />
                     <Star size={16} weight="fill" />
                     <Star size={16} weight="fill" />
                     <Star size={16} weight="fill" />
                     <Star size={16} />
-                </StarsContainer>
+                </StarsCommentContainer>
             </Avaliation>
-            )}
             <MovieInfo>
-                <Image src={MovieRandom} alt="O Hobbit capa" />
                 <Comment>
-                    <CommentData>
-                        <div>
-                            <h3>O Hobbit</h3>
-                            <p>J.R.R Tolkien</p>
-                        </div>
-                        { variant === 'default' && (
-                            <StarsContainer>
-                            <Star size={16} weight="fill" />
-                            <Star size={16} weight="fill" />
-                            <Star size={16} weight="fill" />
-                            <Star size={16} weight="fill" />
-                            <Star size={16} />
-                        </StarsContainer>
-                        )}
-                    </CommentData>
-                    
                     <div>
                         <p>Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. 
                             Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. 
@@ -59,4 +40,90 @@ export function Comments ({variant} : CommentsProps) {
             </MovieInfo>
         </CommentContainer>
     )
-} 
+};
+
+function CommentDefault (){
+    return(
+        <CommentContainer>
+            <MovieInfo>
+                <Image src={MovieRandom} alt="O Hobbit capa" />
+                <Comment>
+                    <CommentData>
+                        <div>
+                            <h3>O Hobbit</h3>
+                            <p>J.R.R Tolkien</p>
+                        </div>
+                        <StarsCommentContainer>
+                            <Star size={16} weight="fill" />
+                            <Star size={16} weight="fill" />
+                            <Star size={16} weight="fill" />
+                            <Star size={16} weight="fill" />
+                            <Star size={16} />
+                        </StarsCommentContainer>
+                    </CommentData>
+                    <div>
+                        <p>Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. 
+                            Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. 
+                            Sed vulputate massa velit nibh...  <a href="#">ver mais</a>
+                        </p>
+                    </div>
+                </Comment>
+            </MovieInfo>
+        </CommentContainer>
+    )
+};
+
+function CommentDetailed (){
+    return(
+        <CommentContainer>
+                <Avaliation>
+                <Profile>
+                    <Image src={AvatarRandom} alt="Avatar Random" />
+                    <div>
+                        <h3>Jaxson Dias</h3>
+                        <p>Hoje</p>  
+                    </div>
+                </Profile>
+                <StarsCommentContainer>
+                    <Star size={16} weight="fill" />
+                    <Star size={16} weight="fill" />
+                    <Star size={16} weight="fill" />
+                    <Star size={16} weight="fill" />
+                    <Star size={16} />
+                </StarsCommentContainer>
+            </Avaliation>
+            <MovieInfo>
+                <Image src={MovieRandom} alt="O Hobbit capa" />
+                <Comment>
+                    <CommentData>
+                        <div>
+                            <h3>O Hobbit</h3>
+                            <p>J.R.R Tolkien</p>
+                        </div>
+                    </CommentData>
+                    <div>
+                        <p>Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. 
+                            Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. 
+                            Sed vulputate massa velit nibh...  <a href="#">ver mais</a>
+                        </p>
+                    </div>
+                </Comment>
+            </MovieInfo>
+        </CommentContainer>
+    )
+};
+
+export function Comments({ variant }: CommentsProps) {
+    if (variant === 'mini') {
+        return <CommentMini />;
+    }
+
+    if (variant === 'default') {
+        return <CommentDefault />;
+    }
+
+    if (variant === 'detailed') {
+        return <CommentDetailed />;
+    }
+    return null;
+}
