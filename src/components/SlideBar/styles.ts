@@ -10,6 +10,7 @@ export const SliderOverlay = styled.div`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6); 
   z-index: 1000;
+  cursor: default;
 `;
 
 export const SlideBarContainer = styled.div`
@@ -20,6 +21,10 @@ export const SlideBarContainer = styled.div`
   width: 66rem;
   height: 100%;
   background-color: ${(props) => props.theme.colors.gray800};
+
+  > svg:hover {
+    cursor: pointer;
+  };
 `;
 
 export const MovieWrapper = styled.div`

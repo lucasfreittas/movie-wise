@@ -25,9 +25,9 @@ export const MovieCardContainer = styled.div<MovieCardContainerProps>`
     background-color: ${(props) => 
         props.variant === 'detailed' ? props.theme.colors.gray600 : props.theme.colors.gray700};
     border-radius: 8px;
-
+    
     &:hover{
-        cursor:  ${(props) => props.variant !== 'expanded' ? 'pointer' : 'normal'};
+        cursor: ${(props) => props.variant !== 'expanded' ? 'pointer' : 'default'};
     }
 `;
 

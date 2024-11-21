@@ -41,6 +41,7 @@ export const TitleContainer = styled.header`
 export const TagsContainer = styled.div`
     display: flex;
     gap: 1.2rem;
+    overflow: auto;
 `;
 
 export const MoviesContainer = styled.main`

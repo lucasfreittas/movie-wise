@@ -6,7 +6,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['cdn.movieofthenight.com', 'www.movieofthenight.com'], // Adicione o domínio da nova URL
+    domains: ['cdn.movieofthenight.com', 'www.movieofthenight.com'],
   },
 };
 

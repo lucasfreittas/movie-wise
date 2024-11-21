@@ -6,14 +6,39 @@ import { X } from "@phosphor-icons/react/dist/ssr";
 
 interface SlideBarProps {
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}
+  title: string;
+  primaryImage: string;
+  secondaryImage: string;
+  director: String;
+  rating: number;
+  overview: String;
+};
 
-export function SlideBar({ onClick }: SlideBarProps) {
+
+export function SlideBar({
+  onClick,
+  title,
+  primaryImage,
+  secondaryImage,
+  director,
+  rating,
+  overview,
+}: SlideBarProps) {
+
+  
   return (
     <SlideBarContainer onClick={onClick}>
         <X size={40}/>
         <MovieWrapper>
-            <MovieCard variant="expanded"/>
+          <MovieCard 
+            variant="expanded"
+            title={title}
+            primaryImage={primaryImage}
+            secondaryImage={secondaryImage}
+            director={director}
+            rating={rating}
+            overview={overview}
+          />
         </MovieWrapper>
         <CommentsWrapper>
             <div className="CommentTitle">

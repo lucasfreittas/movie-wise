@@ -13,13 +13,23 @@ type ImageSet = {
       w480: string;
       w720: string;
     };
+
+    horizontalBackdrop: {
+      w360: string;
+      w480: string;
+      w720: string;
+    }
   };
 
 type Show = {
-    originalTitle: string;
+    title: string;
     imageSet: ImageSet
     availableOn: string[];
     firstAirYear: number | null;
+    creators: string[];
+    directors: string[];
+    rating: number;
+    overview: String;
   };
   
   type Data = {
@@ -29,7 +39,7 @@ type Show = {
   };
   
   type ExploreProps = {
-    data: Data; 
+    data: Data;
   };
 
 export default function Explore({ data }: ExploreProps) {
@@ -37,21 +47,22 @@ export default function Explore({ data }: ExploreProps) {
 
     
   const categories = [
-    "Tudo",
-    "Computação",
-    "Educação",
-    "Fantasia",
-    "Ficção Científica",
-    "Horror",
-    "HQs",
-    "Suspense",
+    "Todos",
+    "Netflix",
+    "Prime Video",
+    "Disney+",
+    "Max",
+    "Apple TV",
+    "Paramount+",
+    "Mubi",
   ];
 
   const shows = data.shows;
+  console.log(shows)
 
   function handleTagClick(index: number) {
     setTagSelectedIndex(index);
-  }
+  };
 
   return (
     <ExploreContainer>
@@ -78,8 +89,12 @@ export default function Explore({ data }: ExploreProps) {
                 <MovieCard 
                     variant="default"
                     key={index}
-                    title={show.originalTitle}
-                    image={show.imageSet.verticalPoster.w240}
+                    title={show.title}
+                    primaryImage={show.imageSet.verticalPoster.w240}
+                    secondaryImage={show.imageSet.horizontalBackdrop.w360}
+                    director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
+                    rating={show.rating}
+                    overview={show.overview}
                 />
             ))}
         </MoviesContainer>
@@ -91,7 +106,7 @@ export default function Explore({ data }: ExploreProps) {
 // Função para normalizar os dados e substituir 'undefined' por 'null'
 function normalizeData(data: any): any {
   if (Array.isArray(data)) {
-    return data.map(normalizeData); // Recursão para arrays
+    return data.map(normalizeData); 
   }
   if (data !== null && typeof data === 'object') {
     return Object.fromEntries(
@@ -101,7 +116,7 @@ function normalizeData(data: any): any {
       ])
     );
   }
-  return data; // Retorna o valor caso seja um tipo primitivo
+  return data;
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -114,16 +129,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
   );
 
   // Chama a API para pegar dados do show
-  const data = await client.showsApi.searchShowsByFilters({
+  const currentYear = new Date().getFullYear(); // Obtém o ano atual
+  const shows = await client.showsApi.searchShowsByFilters({
 	country: "br",
-	catalogs: ["netflix", "prime", "disney", "apple", "hbo"],
+	catalogs: ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi", "curiosity", "plutotv"],
     ratingMin: 70,
-    yearMin: 2020,
+    yearMin: currentYear,
     orderBy: "rating" 
 });
-
+  
   // Normaliza os dados, substituindo qualquer 'undefined' por 'null'
-  const normalizedShows = normalizeData(data);
+  const normalizedShows = normalizeData(shows);
 
   return {
     props: {

@@ -10,6 +10,7 @@ export const TagContainer = styled.div`
     color: ${(props) => props.theme.colors.purple100};
     background-color: transparent;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
 
