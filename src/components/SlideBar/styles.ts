@@ -67,5 +67,7 @@ export const CommentsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
+
+    overflow-y: scroll;
   }
 `;

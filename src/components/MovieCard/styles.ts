@@ -138,6 +138,14 @@ export const MovieDescription = styled.div`
     font-weight: ${(props) => props.theme.fontWeight.regular};
     line-height: ${(props) => props.theme.lineHeight.large};
     color: ${(props) => props.theme.colors.gray300};
+
+    p{
+        display: -webkit-box;
+        -webkit-line-clamp: 5;  /* Limita o número de linhas visíveis */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 export const MovieData = styled.div`
@@ -150,7 +158,14 @@ export const MovieData = styled.div`
         display: flex;
         align-items: center;
         gap: 1.6rem;
+
+        
     };
+
+    .genresContainer {
+        display: flex;
+        gap: 0.8rem;
+    }
 
     p {
         font-size: ${(props) => props.theme.fontSize.xs};

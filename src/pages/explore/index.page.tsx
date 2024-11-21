@@ -21,6 +21,24 @@ type ImageSet = {
     }
   };
 
+  type Genres = {
+    id: String,
+    name: String,
+  };
+
+  type StreamingOptions = {
+    br: {
+      link: string;
+      videoLink: string;
+      service: {
+        name: string;
+        imageSet: {
+          darkThemeImage: string;
+        };
+      };
+    }[];
+  };  
+
 type Show = {
     title: string;
     imageSet: ImageSet
@@ -30,6 +48,8 @@ type Show = {
     directors: string[];
     rating: number;
     overview: String;
+    genres: Genres[];
+    streamingOptions: StreamingOptions;
   };
   
   type Data = {
@@ -58,7 +78,6 @@ export default function Explore({ data }: ExploreProps) {
   ];
 
   const shows = data.shows;
-  console.log(shows)
 
   function handleTagClick(index: number) {
     setTagSelectedIndex(index);
@@ -87,15 +106,17 @@ export default function Explore({ data }: ExploreProps) {
         <MoviesContainer>
             {shows.map((show, index) => (
                 <MovieCard 
-                    variant="default"
-                    key={index}
-                    title={show.title}
-                    primaryImage={show.imageSet.verticalPoster.w240}
-                    secondaryImage={show.imageSet.horizontalBackdrop.w360}
-                    director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
-                    rating={show.rating}
-                    overview={show.overview}
-                />
+                  variant="default"
+                  key={index}
+                  title={show.title}
+                  primaryImage={show.imageSet.verticalPoster.w240}
+                  secondaryImage={show.imageSet.horizontalBackdrop.w360}
+                  director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
+                  rating={show.rating}
+                  overview={show.overview}
+                  genres={show.genres}
+                  streamingOptions={show.streamingOptions.br}
+              />
             ))}
         </MoviesContainer>
       </ExploreWrapper>

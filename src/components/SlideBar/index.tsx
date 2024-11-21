@@ -4,6 +4,22 @@ import { CommentsWrapper, MovieWrapper, SlideBarContainer } from "./styles";
 
 import { X } from "@phosphor-icons/react/dist/ssr";
 
+type Genres = {
+  id: String,
+  name: String,
+}
+
+type StreamingOptions = {
+  link: string;
+  videoLink: string;
+  service: {
+    name: string;
+    imageSet: {
+      darkThemeImage: string;
+    };
+  };
+};
+
 interface SlideBarProps {
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   title: string;
@@ -12,6 +28,8 @@ interface SlideBarProps {
   director: String;
   rating: number;
   overview: String;
+  genres: Genres[];
+  streamingOptions: StreamingOptions[];
 };
 
 
@@ -23,6 +41,8 @@ export function SlideBar({
   director,
   rating,
   overview,
+  genres,
+  streamingOptions
 }: SlideBarProps) {
 
   
@@ -38,12 +58,14 @@ export function SlideBar({
             director={director}
             rating={rating}
             overview={overview}
+            genres={genres}
+            streamingOptions={streamingOptions}
           />
         </MovieWrapper>
         <CommentsWrapper>
             <div className="CommentTitle">
                 <h3>Avaliações</h3>
-                <button>Ver todos</button>
+                <button>Avaliar</button>
             </div>
             <div className="CommentContainer">          
               <Comments variant="mini" />

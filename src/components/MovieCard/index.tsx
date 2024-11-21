@@ -15,6 +15,22 @@ import { Star, BookOpen, Books } from "@phosphor-icons/react/dist/ssr";
 import { SliderOverlay } from "../SlideBar/styles";
 import { SlideBar } from "../SlideBar";
 
+type Genres = {
+  id: String,
+  name: String,
+};
+
+type StreamingOptions = {
+    link: string;
+    videoLink: string;
+    service: {
+      name: string;
+      imageSet: {
+        darkThemeImage: string;
+      };
+    };
+};
+
 type MovieCardProps = {
   variant: "mini" | "default" | "detailed" | "expanded";
   title: string;
@@ -23,6 +39,8 @@ type MovieCardProps = {
   director: String;
   rating: number;
   overview: String;
+  genres: Genres[];
+  streamingOptions: StreamingOptions[];
 };
 
 export function MovieCard({
@@ -32,7 +50,9 @@ export function MovieCard({
   secondaryImage,
   director,
   rating,
-  overview
+  overview,
+  genres,
+  streamingOptions,
 }: MovieCardProps) {
   const [isSlideBarVisible, setIsSlideBarVisible] = useState(false);
   const [imageToShow, setImageToShow] = useState(primaryImage);
@@ -101,15 +121,19 @@ export function MovieCard({
           <div>
             <BookOpen size={24} fill="#50B2C0" />
             <div>
-              <p>Categoria</p>
-              <h3>Computação, educação</h3>
+              <p>Genres</p>
+              <div className="genresContainer">
+                <h3>{genres.map(genre => genre.name).join(', ')}</h3>
+              </div>
             </div>
           </div>
           <div>
             <Books size={24} fill="#50B2C0" />
             <div>
-              <p>Páginas</p>
-              <h3>160</h3>
+              <p>Streamings</p>
+              {streamingOptions.map((streaming, index) => (
+                <h1>{streaming.service.name}</h1>
+              ))}
             </div>
           </div>
         </MovieData>
@@ -124,6 +148,8 @@ export function MovieCard({
             rating={rating}
             onClick={(e) => e.stopPropagation()}
             overview={overview}
+            genres={genres}
+            streamingOptions={streamingOptions}
           />
         </SliderOverlay>
       )}
