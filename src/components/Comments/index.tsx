@@ -9,9 +9,9 @@ type CommentsProps = {
     variant: 'mini' | 'default' | 'detailed'
 };
 
-function CommentMini (){
+function CommentMini ({variant}: CommentsProps){
     return(
-        <CommentContainer>
+        <CommentContainer variant={variant}>
                 <Avaliation>
                 <Profile>
                     <Image src={AvatarRandom} alt="Avatar Random" />
@@ -42,9 +42,9 @@ function CommentMini (){
     )
 };
 
-function CommentDefault (){
+function CommentDefault({variant}: CommentsProps){
     return(
-        <CommentContainer>
+        <CommentContainer variant={variant}>
             <MovieInfo>
                 <Image src={MovieRandom} alt="O Hobbit capa" />
                 <Comment>
@@ -73,9 +73,9 @@ function CommentDefault (){
     )
 };
 
-function CommentDetailed (){
+function CommentDetailed({variant}: CommentsProps){
     return(
-        <CommentContainer>
+        <CommentContainer variant={variant}>
                 <Avaliation>
                 <Profile>
                     <Image src={AvatarRandom} alt="Avatar Random" />
@@ -115,15 +115,15 @@ function CommentDetailed (){
 
 export function Comments({ variant }: CommentsProps) {
     if (variant === 'mini') {
-        return <CommentMini />;
+        return <CommentMini variant="mini" />;
     }
 
     if (variant === 'default') {
-        return <CommentDefault />;
+        return <CommentDefault variant="default"/>;
     }
 
     if (variant === 'detailed') {
-        return <CommentDetailed />;
+        return <CommentDetailed variant="detailed" />;
     }
     return null;
 }

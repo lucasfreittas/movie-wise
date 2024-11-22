@@ -29,19 +29,19 @@ export function Menu (){
                 <Link href='/'>
                     <PageOption className={isActive('/') ? 'active' : ''}>
                         <ChartLineUp size={24} />
-                        <p>Inicio</p>
+                        <p>Home</p>
                     </PageOption>
                 </Link>
                 <Link href='/explore'>
                     <PageOption className={isActive('/explore') ? 'active' : ''}>
                         <Binoculars size={24} />
-                        <p>Explorar</p>
+                        <p>Explore</p>
                     </PageOption>
                 </Link>
                 <Link href='/profile'>
                     <PageOption className={isActive('/profile') ? 'active' : ''}>
                         <User size={24} />
-                        <p>Perfil</p>
+                        <p>Profile</p>
                     </PageOption>
                 </Link>
                 <Indicator position={currentPath} />

@@ -14,8 +14,11 @@ type StreamingOptions = {
   videoLink: string;
   service: {
     name: string;
+    id: string;
     imageSet: {
       darkThemeImage: string;
+      lightThemeImage: string;
+      whiteImage: string;
     };
   };
 };
@@ -30,6 +33,7 @@ interface SlideBarProps {
   overview: String;
   genres: Genres[];
   streamingOptions: StreamingOptions[];
+  close: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 
@@ -42,13 +46,14 @@ export function SlideBar({
   rating,
   overview,
   genres,
-  streamingOptions
+  streamingOptions,
+  close,
 }: SlideBarProps) {
 
   
   return (
     <SlideBarContainer onClick={onClick}>
-        <X size={40}/>
+        <X size={40} onClick={() => close(false)}/>
         <MovieWrapper>
           <MovieCard 
             variant="expanded"

@@ -15,7 +15,7 @@ export const MovieCardContainer = styled.div<MovieCardContainerProps>`
             case 'detailed':
                 return '2rem 2.4rem';
             case 'expanded':
-                return '2.4rem 3.2rem';
+                return '0';
             default:
                 return '1.6rem 2rem';
             }
@@ -150,22 +150,63 @@ export const MovieDescription = styled.div`
 
 export const MovieData = styled.div`
     display: flex;
+    justify-content: space-between;
     padding: 2.4rem 0 0 0;
     gap: 5.6rem;
     border-top: 1px solid ${(props) => props.theme.colors.gray600};
 
-    > div {
+    .outro {
         display: flex;
-        align-items: center;
-        gap: 1.6rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    };
 
-        
+    .dataContainer{
+        display: flex;
     };
 
     .genresContainer {
         display: flex;
+        flex-direction: column;
         gap: 0.8rem;
-    }
+    };
+
+    .genreTitle{
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem
+    };
+
+    .streamingContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    };
+
+    .streamingTitle{
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem
+    };
+
+    .streamingOptions{
+        display: flex;
+        gap: 0.8rem;
+
+        div {
+            background-color: ${(props) => props.theme.colors.gray100};
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            height: fit-content;
+
+            img {
+                padding: 0.4rem;
+            }
+        };
+    };
 
     p {
         font-size: ${(props) => props.theme.fontSize.xs};

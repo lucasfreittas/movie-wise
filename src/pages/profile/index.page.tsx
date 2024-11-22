@@ -14,7 +14,7 @@ export default function Profile (){
         <ProfileContainer>
             <TitleContainer>
                 <User size={32} fill="#50B2C0" />
-                <h1>Perfil</h1>
+                <h1>Profile</h1>
             </TitleContainer>
             <MainContentProfile>
                 <ReviewsContainer>

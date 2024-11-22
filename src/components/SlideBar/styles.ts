@@ -17,10 +17,10 @@ export const SlideBarContainer = styled.div`
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-  padding: 2.4rem 4.8rem;
+  padding: 2.4rem 4.8rem 0 4.8rem;
   width: 66rem;
   height: 100%;
-  background-color: ${(props) => props.theme.colors.gray800};
+  background-color: ${(props) => props.theme.colors.gray700};
 
   > svg:hover {
     cursor: pointer;
@@ -29,7 +29,7 @@ export const SlideBarContainer = styled.div`
 
 export const MovieWrapper = styled.div`
   width: 100%;
-  margin: 1.6rem 0 4rem 0;
+  margin-bottom: 2.4rem;
 `;
 
 export const CommentsWrapper = styled.div`
@@ -37,7 +37,7 @@ export const CommentsWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 1.6rem;
-  overflow-y: scroll;
+  overflow-y: hidden;
 
   .CommentTitle {
     display: flex;
@@ -67,7 +67,7 @@ export const CommentsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-
     overflow-y: scroll;
+    padding-bottom: 2.4rem;
   }
 `;

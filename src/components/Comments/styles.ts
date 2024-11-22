@@ -1,12 +1,16 @@
 import styled from "styled-components";
 
-export const CommentContainer = styled.div`
+interface MovieCardContainerProps {
+    variant: 'mini' | 'default' | 'detailed'
+};
+
+export const CommentContainer = styled.div<MovieCardContainerProps>`
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 1.6rem;
     padding: 2.4rem;
-    background-color: ${(props) => props.theme.colors.gray700};
+    background-color: ${(props) => props.variant === 'mini' ? props.theme.colors.gray800 : props.theme.colors.gray700};
     border-radius: 0.8rem;
 `;
 

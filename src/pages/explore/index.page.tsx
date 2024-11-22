@@ -32,8 +32,11 @@ type ImageSet = {
       videoLink: string;
       service: {
         name: string;
+        id: string;
         imageSet: {
           darkThemeImage: string;
+          lightThemeImage: string;
+          whiteImage: string;
         };
       };
     }[];
@@ -83,15 +86,17 @@ export default function Explore({ data }: ExploreProps) {
     setTagSelectedIndex(index);
   };
 
+  console.log(shows[0])
+
   return (
     <ExploreContainer>
       <ExploreWrapper>
         <TitleContainer>
           <div>
             <Binoculars size={32} fill="#50B2C0" />
-            <h1>Explorar</h1>
+            <h1>Explore</h1>
           </div>
-          <Input placeholder="Buscar filme ou diretor" />
+          <Input placeholder="Search for a movie or director" />
         </TitleContainer>
         <TagsContainer>
           {categories.map((category, index) => (

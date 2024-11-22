@@ -14,6 +14,7 @@ import {
 import { Star, BookOpen, Books } from "@phosphor-icons/react/dist/ssr";
 import { SliderOverlay } from "../SlideBar/styles";
 import { SlideBar } from "../SlideBar";
+import Link from "next/link";
 
 type Genres = {
   id: String,
@@ -25,8 +26,11 @@ type StreamingOptions = {
     videoLink: string;
     service: {
       name: string;
+      id: string;
       imageSet: {
         darkThemeImage: string;
+        lightThemeImage: string;
+        whiteImage: string;
       };
     };
 };
@@ -62,7 +66,7 @@ export function MovieCard({
   };
 
   function renderStars(rating: number){
-    const filledStars = Math.floor(rating / 20);
+    const filledStars = Math.ceil(rating / 20);
 
     return Array.from({ length: 5 }, (_, index) => (
       <Star key={index} weight={index < filledStars ? "fill" : "regular"} />
@@ -71,6 +75,13 @@ export function MovieCard({
 
   function handleOpenSlideBar() {
     variant !== "expanded" && setIsSlideBarVisible(true);
+  };
+
+  function uniqueStreamings() {
+    return streamingOptions.filter(
+      (streaming, index, self) =>
+        index === self.findIndex((s) => s.service.id === streaming.service.id)
+    );
   };
   
   return (
@@ -118,22 +129,33 @@ export function MovieCard({
       </MovieCardWrapper>
       {variant === "expanded" && (
         <MovieData>
-          <div>
-            <BookOpen size={24} fill="#50B2C0" />
+          <div className="genresContainer">
+            <div className="genreTitle">
+              <BookOpen size={24} fill="#50B2C0" />
+              <p>Genres:</p>
+            </div>
             <div>
-              <p>Genres</p>
-              <div className="genresContainer">
-                <h3>{genres.map(genre => genre.name).join(', ')}</h3>
-              </div>
+              <h3>{genres.map(genre => genre.name).join(', ')}</h3>
             </div>
           </div>
-          <div>
-            <Books size={24} fill="#50B2C0" />
-            <div>
-              <p>Streamings</p>
-              {streamingOptions.map((streaming, index) => (
-                <h1>{streaming.service.name}</h1>
-              ))}
+          <div className="streamingContainer">
+            <div className="streamingTitle">
+              <Books size={24} fill="#50B2C0"/>
+              <p>Streamings:</p>
+            </div>
+              <div className="streamingOptions">
+                {uniqueStreamings().map((streaming, index) => (
+                    <Link key={index} href={streaming.link} target="_blank">                 
+                      <div>
+                        <Image 
+                          src={streaming.service.imageSet.lightThemeImage}
+                          height={48}
+                          width={48}
+                          alt="Streaming service"
+                        />
+                      </div>
+                    </Link>
+                  ))} 
             </div>
           </div>
         </MovieData>
@@ -150,6 +172,7 @@ export function MovieCard({
             overview={overview}
             genres={genres}
             streamingOptions={streamingOptions}
+            close={setIsSlideBarVisible}
           />
         </SliderOverlay>
       )}
