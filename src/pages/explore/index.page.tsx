@@ -1,11 +1,14 @@
-import { Input } from "@/components/Input";
 import { ExploreContainer, ExploreWrapper, MoviesContainer, TagsContainer, TitleContainer } from "./styles";
+
 import { Binoculars } from "@phosphor-icons/react/dist/ssr";
-import { Tag } from "@/components/Tag";
-import { useState } from "react";
+
 import { MovieCard } from "@/components/MovieCard";
+import { Input } from "@/components/Input";
+import { Tag } from "@/components/Tag";
+
 import * as streamingAvailability from "streaming-availability";
 import { GetServerSideProps } from "next";
+import { useState } from "react";
 
 type ImageSet = {
     verticalPoster: {
@@ -68,7 +71,6 @@ type Show = {
 export default function Explore({ data }: ExploreProps) {
   const [tagSelectedIndex, setTagSelectedIndex] = useState(0);
 
-    
   const categories = [
     "Todos",
     "Netflix",
@@ -86,7 +88,8 @@ export default function Explore({ data }: ExploreProps) {
     setTagSelectedIndex(index);
   };
 
-  console.log(shows[0])
+
+  console.log(shows)
 
   return (
     <ExploreContainer>
@@ -155,13 +158,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   );
 
   // Chama a API para pegar dados do show
-  const currentYear = new Date().getFullYear(); // Obtém o ano atual
-  const shows = await client.showsApi.searchShowsByFilters({
+  const { shows, nextCursor, hasMore } = await client.showsApi.searchShowsByFilters({
 	country: "br",
 	catalogs: ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi", "curiosity", "plutotv"],
-    ratingMin: 70,
-    yearMin: currentYear,
-    orderBy: "rating" 
+    ratingMin: 80,
+    orderBy: "popularity_1week",
 });
   
   // Normaliza os dados, substituindo qualquer 'undefined' por 'null'
@@ -169,7 +170,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      data: normalizedShows,
+      data: {
+        shows: normalizedShows,
+        nextCursor,
+        hasMore,
+      },
     },
   };
 };
