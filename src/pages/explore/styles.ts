@@ -51,3 +51,21 @@ export const MoviesContainer = styled.main`
     width: 100%;
     margin-top: 4rem;
 `;
+
+export const ButtonLoadMore = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    font-size: ${(props) => props.theme.fontSize.xl};
+    line-height: ${(props) => props.theme.lineHeight.regular};
+    font-weight: ${(props) => props.theme.fontWeight.bold};
+    color: ${(props) => props.theme.colors.gray800};
+    background: ${(props) => props.theme.colors.gradientHorizontal};
+    border-radius: 8px;
+    min-height: 184px;
+
+    svg {
+        color: ${(props) => props.theme.colors.gray800};
+    }
+`;
