@@ -8,7 +8,7 @@ import { Binoculars, ArrowCircleDown } from "@phosphor-icons/react/dist/ssr";
 
 import * as streamingAvailability from "streaming-availability";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ImageSet = {
   verticalPoster: {
@@ -73,6 +73,8 @@ export default function Explore({ data }: ExploreProps) {
   const [shows, setShows] = useState(data.shows);
   const [nextCursor, setNextCursor] = useState(data.nextCursor);
   const [hasMore, setHasMore] = useState(data.hasMore);
+  const [selectedStreaming, setSelectedStreaming] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const categories = [
     "All",
@@ -85,11 +87,58 @@ export default function Explore({ data }: ExploreProps) {
     "Mubi",
   ];
 
-  function handleTagClick(index: number) {
-    setTagSelectedIndex(index);
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const query = event.target.value;
+    console.log(query)
+    // setSearchTerm(query);
   }
 
-  console.log(shows)
+  function handleSearch() {
+    if (searchTerm.trim() !== "") {
+      fetchMoviesByTitle(searchTerm);
+    } else {
+      fetchMovies(selectedStreaming); // Volta à busca dos filmes por streaming, se o campo de pesquisa estiver vazio
+    }
+  }
+
+  function handleTagClick(index: number) {
+    setTagSelectedIndex(index);
+
+    // Mapeia o índice para o catálogo correspondente
+    const catalogMap = [
+      null, // All
+      "netflix",
+      "prime",
+      "disney",
+      "hbo",
+      "apple",
+      "paramount",
+      "mubi",
+    ];
+
+    setSelectedStreaming(catalogMap[index]);
+    fetchMovies(catalogMap[index]); // Busca os filmes para o streaming selecionado
+  }
+
+  async function fetchMovies(catalog: string | null) {
+    const RAPID_API_KEY = process.env.NEXT_PUBLIC_STREAMING_API_KEY;
+    const client = new streamingAvailability.Client(
+      new streamingAvailability.Configuration({
+        apiKey: RAPID_API_KEY,
+      })
+    );
+
+    const { shows, nextCursor: newNextCursor, hasMore } = await client.showsApi.searchShowsByFilters({
+      country: "br",
+      catalogs: catalog ? [catalog] : ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi"], // Seleciona o catálogo ou todos
+      ratingMin: 80,
+      orderBy: "popularity_1week",
+    });
+
+    setShows(normalizeData(shows)); // Atualiza os filmes com as novas imagens
+    setNextCursor(newNextCursor || null);
+    setHasMore(hasMore);
+  }
 
   async function loadMoreMovies() {
     if (hasMore) {
@@ -99,21 +148,61 @@ export default function Explore({ data }: ExploreProps) {
           apiKey: RAPID_API_KEY,
         })
       );
-  
+
       const { shows, nextCursor: newNextCursor, hasMore } = await client.showsApi.searchShowsByFilters({
         country: "br",
-        catalogs: ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi"],
+        catalogs: selectedStreaming ? [selectedStreaming] : ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi"], // Mantém o filtro atual
         ratingMin: 80,
         orderBy: "popularity_1week",
-        cursor: nextCursor!, // Afirma que nextCursor não será undefined
+        cursor: nextCursor!,
       });
-  
-      setShows((prevShows) => [...prevShows, ...normalizeData(shows)]);
-      setNextCursor(newNextCursor!); // Afirma que o nextCursor não será undefined
+
+      setShows((prevShows) => [...prevShows, ...normalizeData(shows)]); // Adiciona mais filmes à lista
+      setNextCursor(newNextCursor || null);
       setHasMore(hasMore);
     }
-  };
+  }
+
+  async function fetchMoviesByTitle(title: string) {
+    const RAPID_API_KEY = process.env.NEXT_PUBLIC_STREAMING_API_KEY;
+    const client = new streamingAvailability.Client(
+      new streamingAvailability.Configuration({
+        apiKey: RAPID_API_KEY,
+      })
+    );
   
+    const { shows, nextCursor: newNextCursor, hasMore } = await client.showsApi.searchShowsByTitle({
+      title: title,
+      country: "br",
+      catalogs: selectedStreaming ? [selectedStreaming] : ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi"],
+      ratingMin: 80,
+      orderBy: "popularity_1week",
+    });
+  
+    setShows(normalizeData(shows)); // Atualiza os filmes com os novos dados
+    setNextCursor(newNextCursor || null);
+    setHasMore(hasMore);
+  }
+
+
+  useEffect(() => {
+    // Ao selecionar uma nova categoria, reinicia a imagem
+    setShows((prevShows) =>
+      prevShows.map((show) => ({
+        ...show,
+        imageToShow: show.imageSet.verticalPoster.w240, // ou a imagem que você preferir
+      }))
+    );
+  }, [selectedStreaming]); // Esse efeito será disparado sempre que a categoria mudar
+  
+  useEffect(() => {
+    if (searchTerm.trim() !== "") {
+      fetchMoviesByTitle(searchTerm);
+    } else {
+      fetchMovies(selectedStreaming);
+    }
+  }, [searchTerm, selectedStreaming]);
+
   return (
     <ExploreContainer>
       <ExploreWrapper>
@@ -122,7 +211,9 @@ export default function Explore({ data }: ExploreProps) {
             <Binoculars size={32} fill="#50B2C0" />
             <h1>Explore</h1>
           </div>
-          <Input placeholder="Search for a movie or director" />
+          <Input
+            placeholder="Search for a movie or director"
+          />
         </TitleContainer>
         <TagsContainer>
           {categories.map((category, index) => (
@@ -130,7 +221,7 @@ export default function Explore({ data }: ExploreProps) {
               key={index}
               tagName={category}
               clicked={tagSelectedIndex === index}
-              onClick={() => handleTagClick(index)}
+              onClick={() => handleTagClick(index)} // Ao clicar, atualiza os filmes
             />
           ))}
         </TagsContainer>
@@ -140,8 +231,8 @@ export default function Explore({ data }: ExploreProps) {
               variant="default"
               key={index}
               title={show.title}
-              primaryImage={show.imageSet.verticalPoster.w240}
-              secondaryImage={show.imageSet.horizontalBackdrop.w360}
+              primaryImage={show.imageSet.verticalPoster.w240} // Atualiza a imagem
+              secondaryImage={show.imageSet.horizontalBackdrop.w360} // Atualiza a imagem
               director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
               rating={show.rating}
               overview={show.overview}
@@ -149,14 +240,12 @@ export default function Explore({ data }: ExploreProps) {
               streamingOptions={show.streamingOptions.br}
             />
           ))}
-        {hasMore && (
-          <ButtonLoadMore 
-            onClick={loadMoreMovies}
-          >
-            Load more
-            <ArrowCircleDown size={32}/>
-          </ButtonLoadMore>
-        )}
+          {hasMore && (
+            <ButtonLoadMore onClick={loadMoreMovies}>
+              Load more
+              <ArrowCircleDown size={32} />
+            </ButtonLoadMore>
+          )}
         </MoviesContainer>
       </ExploreWrapper>
     </ExploreContainer>
@@ -166,7 +255,7 @@ export default function Explore({ data }: ExploreProps) {
 // Função para normalizar os dados e substituir 'undefined' por 'null'
 function normalizeData(data: any): any {
   if (Array.isArray(data)) {
-    return data.map(normalizeData); 
+    return data.map(normalizeData);
   }
   if (data !== null && typeof data === 'object') {
     return Object.fromEntries(

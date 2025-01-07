@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   MovieCardContainer,
@@ -65,25 +65,29 @@ export function MovieCard({
     setImageToShow(secondaryImage);
   };
 
-  function renderStars(rating: number){
-    const filledStars = Math.ceil(rating / 20);
+  useEffect(() => {
+    // Atualizar a imagem sempre que o filme mudar
+    setImageToShow(primaryImage);
+  }, [primaryImage]); // Quando primaryImage mudar, atualizar a imagem
 
+  function renderStars(rating: number) {
+    const filledStars = Math.ceil(rating / 20);
     return Array.from({ length: 5 }, (_, index) => (
       <Star key={index} weight={index < filledStars ? "fill" : "regular"} />
     ));
-  };
+  }
 
   function handleOpenSlideBar() {
     variant !== "expanded" && setIsSlideBarVisible(true);
-  };
+  }
 
   function uniqueStreamings() {
     return streamingOptions.filter(
       (streaming, index, self) =>
         index === self.findIndex((s) => s.service.id === streaming.service.id)
     );
-  };
-  
+  }
+
   return (
     <MovieCardContainer variant={variant}>
       <MovieCardWrapper variant={variant} onClick={handleOpenSlideBar}>
@@ -100,19 +104,14 @@ export function MovieCard({
               {variant === "detailed" && <span>Há 2 dias</span>}
               <h3>{title}</h3>
               <p>{director}</p>
-
             </MovieTitle>
             {variant === "expanded" && (
-            <MovieDescription>
-              <p>
-                {overview}
-              </p>
-            </MovieDescription>
-          )}
+              <MovieDescription>
+                <p>{overview}</p>
+              </MovieDescription>
+            )}
             <StarsMovieCardContainer variant={variant}>
-              <div>
-                {renderStars(rating)}
-              </div>
+              <div>{renderStars(rating)}</div>
               {variant === "expanded" && <p>3 avaliações</p>}
             </StarsMovieCardContainer>
           </MovieContent>
@@ -135,27 +134,27 @@ export function MovieCard({
               <p>Genres:</p>
             </div>
             <div>
-              <h3>{genres.map(genre => genre.name).join(', ')}</h3>
+              <h3>{genres.map((genre) => genre.name).join(", ")}</h3>
             </div>
           </div>
           <div className="streamingContainer">
             <div className="streamingTitle">
-              <Books size={24} fill="#50B2C0"/>
+              <Books size={24} fill="#50B2C0" />
               <p>Streamings:</p>
             </div>
-              <div className="streamingOptions">
-                {uniqueStreamings().map((streaming, index) => (
-                    <Link key={index} href={streaming.link} target="_blank">                 
-                      <div>
-                        <Image 
-                          src={streaming.service.imageSet.lightThemeImage}
-                          height={48}
-                          width={48}
-                          alt="Streaming service"
-                        />
-                      </div>
-                    </Link>
-                  ))} 
+            <div className="streamingOptions">
+              {uniqueStreamings().map((streaming, index) => (
+                <Link key={index} href={streaming.link} target="_blank">
+                  <div>
+                    <Image
+                      src={streaming.service.imageSet.lightThemeImage}
+                      height={48}
+                      width={48}
+                      alt="Streaming service"
+                    />
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </MovieData>

@@ -29,11 +29,12 @@ export const TitleContainer = styled.header`
 `;
 
 export const HomeContent = styled.main`
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 6.4rem;
+    max-width: 99.6rem;
+    justify-self: center;
+    gap: 4rem;
 `;
 
 export const ReviewsContent = styled.section`
@@ -55,6 +56,12 @@ export const LastReview = styled.div`
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.4rem;
+
+        h3 {
+            strong {
+                color: ${(props) => props.theme.colors.gray100};
+            }
+        } 
 
         > button {
             display: flex;
@@ -85,15 +92,30 @@ export const RecentReviews = styled.section`
 export const PopularMovies = styled.section`
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    width: 32.4rem;
+    max-width: 99.6%;
     height: 100%;
+    gap: 1.6rem;
+    
+    > .MovieWrapper{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        width: 100%;
+        
+    }
 
     > .SectionTitle {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 0.4rem;
+
+        h3 {
+            font-size: ${(props) => props.theme.fontSize.sm};
+        }
+
+        strong {
+            color: ${(props) => props.theme.colors.green100};
+        }
 
         > button {
             display: flex;

@@ -29,7 +29,7 @@ export function Menu (){
                 <Link href='/'>
                     <PageOption className={isActive('/') ? 'active' : ''}>
                         <ChartLineUp size={24} />
-                        <p>Home</p>
+                        <p>Trending</p>
                     </PageOption>
                 </Link>
                 <Link href='/explore'>
@@ -38,19 +38,19 @@ export function Menu (){
                         <p>Explore</p>
                     </PageOption>
                 </Link>
-                <Link href='/profile'>
+                {/* <Link href='/profile'>
                     <PageOption className={isActive('/profile') ? 'active' : ''}>
                         <User size={24} />
                         <p>Profile</p>
                     </PageOption>
                 </Link>
-                <Indicator position={currentPath} />
+                <Indicator position={currentPath} /> */}
             </div>
-            <ProfileToggle>
+            {/* <ProfileToggle>
                 <Image src={AvatarRandom} height={32} alt="BookWise Logo" className="AvatarImage"/>
                 <p>Cristofer</p>
                 <SignOut size={20} fill="#F75A68" />
-            </ProfileToggle>  
+            </ProfileToggle>   */}
         </MenuContainer>
     )
 };

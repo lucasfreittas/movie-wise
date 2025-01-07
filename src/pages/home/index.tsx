@@ -4,6 +4,8 @@ import { HomeContainer, HomeContent, LastReview, PopularMovies, RecentReviews, R
 import { ChartLineUp, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { MovieCard } from "@/components/MovieCard";
 
+import DefaultImage from '../../assets/default-image-path.jpg';
+
 import * as streamingAvailability from "streaming-availability";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
@@ -68,52 +70,57 @@ type Show = {
 
   export default function Home({ data }: HomeProps) {
 
-    const shows = data.shows;
-    console.log(data)   
+    const series = data.series;
+    const movies = data.movies;
     
     return(
         <HomeContainer>
             <TitleContainer>
                 <ChartLineUp size={32} fill="#50B2C0" />
-                <h1>Home</h1>
+                <h1>Trending</h1>
             </TitleContainer>
             <HomeContent>
-                <ReviewsContent>
-                    <LastReview>
-                        <div className="SectionTitle">
-                            <h3>Your last movie</h3>
-                            <button>See more <CaretRight size={16}/></button>
-                        </div>
-                        <MovieCard variant="detailed" />
-                    </LastReview>
-                    <RecentReviews>
-                        <div className="titleRecentReviews">
-                            <h3>Recent watched movies</h3>
-                        </div>
-                        <Comments variant="detailed" />
-                        <Comments variant="detailed" />
-                        <Comments variant="detailed" />
-                        <Comments variant="detailed" />
-                    </RecentReviews>
-                </ReviewsContent>
+                 <PopularMovies>
+                    <div className="SectionTitle">
+                        <h3>Top <strong>movies</strong> of the week </h3>
+                    </div>
+                    <div className="MovieWrapper">
+                      {movies.slice(0, 6).map((show, index) => (
+                        <MovieCard 
+                          variant="default"
+                          key={index}
+                          title={show.title}
+                          primaryImage={show.imageSet.verticalPoster.w240}
+                          secondaryImage={show.imageSet.horizontalBackdrop?.w360 || DefaultImage.src}
+                          director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
+                          rating={show.rating}
+                          overview={show.overview}
+                          genres={show.genres}
+                          streamingOptions={show.streamingOptions.br}
+                      />
+                     ))}
+                  </div>
+                </PopularMovies>
                 <PopularMovies>
                     <div className="SectionTitle">
-                        <h3>Top movies of the week</h3>
+                        <h3>Top <strong>shows</strong> of the week</h3>
                     </div>
-                    {shows.slice(0, 5).map((show, index) => (
-                      <MovieCard 
-                        variant="mini"
-                        key={index}
-                        title={show.title}
-                        primaryImage={show.imageSet.verticalPoster.w240}
-                        secondaryImage={show.imageSet.horizontalBackdrop.w360}
-                        director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
-                        rating={show.rating}
-                        overview={show.overview}
-                        genres={show.genres}
-                        streamingOptions={show.streamingOptions.br}
-                    />
-                  ))}
+                    <div className="MovieWrapper">
+                      {series.slice(0, 6).map((show, index) => (
+                        <MovieCard 
+                          variant="default"
+                          key={index}
+                          title={show.title}
+                          primaryImage={show.imageSet.verticalPoster.w240}
+                          secondaryImage={show.imageSet.horizontalBackdrop?.w360 || DefaultImage.src}
+                          director={show.directors?.[0] || show.creators?.[0] || "Desconhecido"}
+                          rating={show.rating}
+                          overview={show.overview}
+                          genres={show.genres}
+                          streamingOptions={show.streamingOptions.br}
+                      />
+                     ))}
+                  </div>
                 </PopularMovies>
             </HomeContent>
         </HomeContainer>
@@ -145,23 +152,38 @@ function normalizeData(data: any): any {
       })
     );
   
-    // Chama a API para pegar dados do show
-    const { shows, nextCursor, hasMore } = await client.showsApi.searchShowsByFilters({
+    const { shows: series, nextCursor: nextCursorSeries, hasMore: hasMoreSeries } =
+    await client.showsApi.searchShowsByFilters({
       country: "br",
       catalogs: ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi", "curiosity", "plutotv"],
-        ratingMin: 80,
-        orderBy: "popularity_1week",
+      orderBy: "popularity_1week",
+      showType: "series",
+      ratingMin: 70,
+    });
+
+  // Busca dados para filmes
+  const { shows: movies, nextCursor: nextCursorMovies, hasMore: hasMoreMovies } =
+    await client.showsApi.searchShowsByFilters({
+      country: "br",
+      catalogs: ["netflix", "prime", "disney", "apple", "hbo", "paramount", "mubi", "curiosity", "plutotv"],
+      orderBy: "popularity_1week",
+      showType: "movie",
+      ratingMin: 70,
     });
     
-    // Normaliza os dados, substituindo qualquer 'undefined' por 'null'
-    const normalizedShows = normalizeData(shows);
+     // Normaliza os dados, substituindo qualquer 'undefined' por 'null'
+    const normalizedSeries = normalizeData(series);
+    const normalizedMovies = normalizeData(movies);
 
     return {
       props: {
         data: {
-          shows: normalizedShows,
-          nextCursor,
-          hasMore,
+          series: normalizedSeries,
+          movies: normalizedMovies,
+          hasMoreSeries,
+          nextCursorSeries,
+          hasMoreMovies,
+          nextCursorMovies,
         },
       },
     };
